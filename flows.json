@@ -1,0 +1,1136 @@
+[
+    {
+        "id": "f1c966fcda50217a",
+        "type": "tab",
+        "label": "01-Core Messaging",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d2ff202d32ddc73a",
+        "type": "tab",
+        "label": "MQTT Experiments",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6557d465f05404cd",
+        "type": "mqtt-broker",
+        "name": "Client A",
+        "broker": "127.0.0.1",
+        "port": 1883,
+        "clientid": "nodered-client-a",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f8fed6ebbfc87bc2",
+        "type": "mqtt-broker",
+        "name": "Client B",
+        "broker": "127.0.0.1",
+        "port": 1883,
+        "clientid": "nodered-client-b",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ec9c9abff43aae34",
+        "type": "mqtt-broker",
+        "name": "Observer",
+        "broker": "127.0.0.1",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "d813a7999708720b",
+        "type": "mqtt out",
+        "z": "f1c966fcda50217a",
+        "name": "Client A",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6557d465f05404cd",
+        "x": 760,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "55947a011cbf89b2",
+        "type": "mqtt in",
+        "z": "f1c966fcda50217a",
+        "name": "",
+        "topic": "demo/a_to_b",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "f8fed6ebbfc87bc2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 770,
+        "y": 240,
+        "wires": [
+            [
+                "c3b5845d0f5c87f8"
+            ]
+        ]
+    },
+    {
+        "id": "71184a988496b5c6",
+        "type": "inject",
+        "z": "f1c966fcda50217a",
+        "name": "A gửi lời chào",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 370,
+        "y": 160,
+        "wires": [
+            [
+                "459ee21024ce0624"
+            ]
+        ]
+    },
+    {
+        "id": "459ee21024ce0624",
+        "type": "function",
+        "z": "f1c966fcda50217a",
+        "name": "Tạo tin A",
+        "func": "msg.topic = \"demo/a_to_b\";\nmsg.payload = \"Xin chào B\";\nmsg.qos = 0;\nmsg.retain = false;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 160,
+        "wires": [
+            [
+                "d813a7999708720b"
+            ]
+        ]
+    },
+    {
+        "id": "c3b5845d0f5c87f8",
+        "type": "function",
+        "z": "f1c966fcda50217a",
+        "name": "B xử lý",
+        "func": "msg.receivedBy = \"B\";\nmsg.receivedAt = new Date().toISOString();\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 240,
+        "wires": [
+            [
+                "379d3cc13fa16a8f"
+            ]
+        ]
+    },
+    {
+        "id": "379d3cc13fa16a8f",
+        "type": "debug",
+        "z": "f1c966fcda50217a",
+        "name": "B nhận",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "27a6c228e29ca873",
+        "type": "inject",
+        "z": "f1c966fcda50217a",
+        "name": "B gửi phản hồi",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 380,
+        "y": 360,
+        "wires": [
+            [
+                "d2389a73a7847428"
+            ]
+        ]
+    },
+    {
+        "id": "d2389a73a7847428",
+        "type": "function",
+        "z": "f1c966fcda50217a",
+        "name": "Tạo tin B",
+        "func": "msg.topic = \"demo/b_to_a\";\nmsg.payload = \"B đã nhận được tin nhắn\";\nmsg.qos = 0;\nmsg.retain = false;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 360,
+        "wires": [
+            [
+                "0ceadbba5399624f"
+            ]
+        ]
+    },
+    {
+        "id": "0ceadbba5399624f",
+        "type": "mqtt out",
+        "z": "f1c966fcda50217a",
+        "name": "Client B",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f8fed6ebbfc87bc2",
+        "x": 760,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "fd1f445c01f37738",
+        "type": "mqtt in",
+        "z": "f1c966fcda50217a",
+        "name": "",
+        "topic": "demo/b_to_a",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "6557d465f05404cd",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 770,
+        "y": 420,
+        "wires": [
+            [
+                "8720b603475aed6c"
+            ]
+        ]
+    },
+    {
+        "id": "8720b603475aed6c",
+        "type": "function",
+        "z": "f1c966fcda50217a",
+        "name": "A xử lý",
+        "func": "msg.receivedBy = \"A\";\nmsg.receivedAt = new Date().toISOString();\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 420,
+        "wires": [
+            [
+                "c0601ab977cdb238"
+            ]
+        ]
+    },
+    {
+        "id": "c0601ab977cdb238",
+        "type": "debug",
+        "z": "f1c966fcda50217a",
+        "name": "A nhận",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "bb26eb6044a836aa",
+        "type": "inject",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 200,
+        "wires": [
+            [
+                "fcfcef2fef5bb976"
+            ]
+        ]
+    },
+    {
+        "id": "fcfcef2fef5bb976",
+        "type": "function",
+        "z": "d2ff202d32ddc73a",
+        "name": " Tạo tin test 1",
+        "func": "msg.topic = \"demo/test1/message\";\nmsg.payload = \"Tin kiểm tra topic\";\nmsg.qos = 0;\nmsg.retain = false;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 200,
+        "wires": [
+            [
+                "1a9cd16356727ed8"
+            ]
+        ]
+    },
+    {
+        "id": "1a9cd16356727ed8",
+        "type": "mqtt out",
+        "z": "d2ff202d32ddc73a",
+        "name": "Client A",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6557d465f05404cd",
+        "x": 620,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "53c80bf2f85a661f",
+        "type": "mqtt in",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "topic": "demo/test1/message",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "f8fed6ebbfc87bc2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 710,
+        "y": 260,
+        "wires": [
+            [
+                "060dee6fed471bbb"
+            ]
+        ]
+    },
+    {
+        "id": "060dee6fed471bbb",
+        "type": "debug",
+        "z": "d2ff202d32ddc73a",
+        "name": "Topic đúng",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "d257efd57759488b",
+        "type": "mqtt in",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "topic": "demo/test1/other",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "ec9c9abff43aae34",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 700,
+        "y": 320,
+        "wires": [
+            [
+                "b85bac0ac2956589"
+            ]
+        ]
+    },
+    {
+        "id": "b85bac0ac2956589",
+        "type": "debug",
+        "z": "d2ff202d32ddc73a",
+        "name": "Topic sai",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4266bd523aef2336",
+        "type": "inject",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 820,
+        "wires": [
+            [
+                "f1df47cc3f253b0c"
+            ]
+        ]
+    },
+    {
+        "id": "f1df47cc3f253b0c",
+        "type": "function",
+        "z": "d2ff202d32ddc73a",
+        "name": "Tạo tin broadcast",
+        "func": "msg.topic = \"demo/test2/broadcast\";\nmsg.payload = \"Thông báo cho mọi subscriber\";\nmsg.qos = 0;\nmsg.retain = false;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 820,
+        "wires": [
+            [
+                "2916fb341febc4de"
+            ]
+        ]
+    },
+    {
+        "id": "2916fb341febc4de",
+        "type": "mqtt out",
+        "z": "d2ff202d32ddc73a",
+        "name": "Client A",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6557d465f05404cd",
+        "x": 700,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "a5e1a83c0910448a",
+        "type": "mqtt in",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "topic": "demo/test2/broadcast",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "f8fed6ebbfc87bc2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 740,
+        "y": 880,
+        "wires": [
+            [
+                "e3bb6472a351db86"
+            ]
+        ]
+    },
+    {
+        "id": "eec01bde473a67fd",
+        "type": "mqtt in",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "topic": "demo/test2/broadcast",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "ec9c9abff43aae34",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 740,
+        "y": 960,
+        "wires": [
+            [
+                "1c68d97b53145e2a"
+            ]
+        ]
+    },
+    {
+        "id": "e3bb6472a351db86",
+        "type": "debug",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "1c68d97b53145e2a",
+        "type": "debug",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "771066acf4852812",
+        "type": "inject",
+        "z": "d2ff202d32ddc73a",
+        "name": "Nhánh A",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "demo/test3/a",
+        "payload": "Tin nhánh A",
+        "payloadType": "str",
+        "x": 260,
+        "y": 1340,
+        "wires": [
+            [
+                "2f0873e11758d483"
+            ]
+        ]
+    },
+    {
+        "id": "2f0873e11758d483",
+        "type": "mqtt out",
+        "z": "d2ff202d32ddc73a",
+        "name": "Client A",
+        "topic": "",
+        "qos": "",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6557d465f05404cd",
+        "x": 520,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "ba970f7dc7a24831",
+        "type": "mqtt in",
+        "z": "d2ff202d32ddc73a",
+        "name": "Observer",
+        "topic": "demo/test3/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "ec9c9abff43aae34",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 520,
+        "y": 1480,
+        "wires": [
+            [
+                "60e01a66c1899593"
+            ]
+        ]
+    },
+    {
+        "id": "b70d9b9e4b56f493",
+        "type": "inject",
+        "z": "d2ff202d32ddc73a",
+        "name": "Nhánh B",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "demo/test3/b",
+        "payload": "Tin nhánh B",
+        "payloadType": "str",
+        "x": 260,
+        "y": 1420,
+        "wires": [
+            [
+                "2f0873e11758d483"
+            ]
+        ]
+    },
+    {
+        "id": "60e01a66c1899593",
+        "type": "debug",
+        "z": "d2ff202d32ddc73a",
+        "name": "Wildcard nhận",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "92da276fd381a5a9",
+        "type": "inject",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 360,
+        "y": 2120,
+        "wires": [
+            [
+                "6e84a9d38311f3e3"
+            ]
+        ]
+    },
+    {
+        "id": "6e84a9d38311f3e3",
+        "type": "function",
+        "z": "d2ff202d32ddc73a",
+        "name": "Tạo retained",
+        "func": "msg.topic = \"demo/test4/status\";\nmsg.payload = \"Trạng thái mới nhất: sẵn sàng\";\nmsg.qos = 1;\nmsg.retain = true;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 2120,
+        "wires": [
+            [
+                "f2c4dd9725154ef0"
+            ]
+        ]
+    },
+    {
+        "id": "f2c4dd9725154ef0",
+        "type": "mqtt out",
+        "z": "d2ff202d32ddc73a",
+        "name": "Client A",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6557d465f05404cd",
+        "x": 800,
+        "y": 2120,
+        "wires": []
+    },
+    {
+        "id": "749db817e9d37973",
+        "type": "mqtt in",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "topic": "demo/test4/status",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "ec9c9abff43aae34",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 850,
+        "y": 2180,
+        "wires": [
+            [
+                "d6fdafd7036a5360"
+            ]
+        ]
+    },
+    {
+        "id": "d6fdafd7036a5360",
+        "type": "debug",
+        "z": "d2ff202d32ddc73a",
+        "name": "Subscriber kết nối muộn",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 2180,
+        "wires": []
+    },
+    {
+        "id": "e6e5f3cacd63095e",
+        "type": "inject",
+        "z": "d2ff202d32ddc73a",
+        "name": "Xóa retained",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 370,
+        "y": 2320,
+        "wires": [
+            [
+                "169bc2b8f05edfa9"
+            ]
+        ]
+    },
+    {
+        "id": "169bc2b8f05edfa9",
+        "type": "function",
+        "z": "d2ff202d32ddc73a",
+        "name": "Tạo payload rỗng",
+        "func": "msg.topic = \"demo/test4/status\";\nmsg.payload = \"\";\nmsg.qos = 1;\nmsg.retain = true;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 2320,
+        "wires": [
+            [
+                "afaea7894e6e015c"
+            ]
+        ]
+    },
+    {
+        "id": "afaea7894e6e015c",
+        "type": "mqtt out",
+        "z": "d2ff202d32ddc73a",
+        "name": "Client A",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6557d465f05404cd",
+        "x": 800,
+        "y": 2320,
+        "wires": []
+    },
+    {
+        "id": "96678f0dc0f7ff4d",
+        "type": "inject",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 360,
+        "y": 3540,
+        "wires": [
+            [
+                "25365176fddee868"
+            ]
+        ]
+    },
+    {
+        "id": "c72920deaa27d13e",
+        "type": "inject",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 380,
+        "y": 3600,
+        "wires": [
+            [
+                "640c94759871f046"
+            ]
+        ]
+    },
+    {
+        "id": "cdaf43580f6b2571",
+        "type": "inject",
+        "z": "d2ff202d32ddc73a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 380,
+        "y": 3680,
+        "wires": [
+            [
+                "f03ba1eeb22467d7"
+            ]
+        ]
+    },
+    {
+        "id": "25365176fddee868",
+        "type": "function",
+        "z": "d2ff202d32ddc73a",
+        "name": "QoS 0",
+        "func": "msg.topic = \"demo/test5/qos\";\nmsg.payload = \"Tin QoS 0\";\nmsg.qos = 0;\nmsg.retain = false;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 3540,
+        "wires": [
+            [
+                "d04262e41f9419cc"
+            ]
+        ]
+    },
+    {
+        "id": "640c94759871f046",
+        "type": "function",
+        "z": "d2ff202d32ddc73a",
+        "name": "QoS 1",
+        "func": "msg.topic = \"demo/test5/qos\";\nmsg.payload = \"Tin QoS 1\";\nmsg.qos = 1;\nmsg.retain = false;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 618,
+        "y": 3598,
+        "wires": [
+            [
+                "d04262e41f9419cc"
+            ]
+        ]
+    },
+    {
+        "id": "f03ba1eeb22467d7",
+        "type": "function",
+        "z": "d2ff202d32ddc73a",
+        "name": "QoS 2",
+        "func": "msg.topic = \"demo/test5/qos\";\nmsg.payload = \"Tin QoS 2\";\nmsg.qos = 2;\nmsg.retain = false;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 3680,
+        "wires": [
+            [
+                "d04262e41f9419cc"
+            ]
+        ]
+    },
+    {
+        "id": "d04262e41f9419cc",
+        "type": "mqtt out",
+        "z": "d2ff202d32ddc73a",
+        "name": "Client A",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6557d465f05404cd",
+        "x": 880,
+        "y": 3600,
+        "wires": []
+    },
+    {
+        "id": "3a1529cf3692ea8b",
+        "type": "mqtt in",
+        "z": "d2ff202d32ddc73a",
+        "name": "Client B",
+        "topic": "demo/test5/qos",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "f8fed6ebbfc87bc2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 870,
+        "y": 3720,
+        "wires": [
+            [
+                "be123702915c6960"
+            ]
+        ]
+    },
+    {
+        "id": "be123702915c6960",
+        "type": "debug",
+        "z": "d2ff202d32ddc73a",
+        "name": "Kết quả QoS",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 3720,
+        "wires": []
+    }
+]
